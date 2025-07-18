@@ -30,11 +30,11 @@ type = "chroma"
 persist_path = "pilot/data"
 
 [rag.storage.graph]
-type = "tugraph"
+type = "neo4j"
 host="127.0.0.1"
 port=7687
-username="admin"
-password="73@TuGraph"
+username="neo4j"
+password="qq123456"
 
 # enable_summary="True"
 # community_topk=20

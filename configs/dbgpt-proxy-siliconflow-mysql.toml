@@ -41,3 +41,13 @@ api_key = "${env:SILICONFLOW_API_KEY}"
 name = "BAAI/bge-reranker-v2-m3"
 provider = "proxy/siliconflow"
 api_key = "${env:SILICONFLOW_API_KEY}"
+
+# graph rag 配置
+#[graph_storage]
+#type = "neo4j"
+#uri = "bolt://neo4j:7687"
+#user = "neo4j"
+#password = "qq123456"
+
+#[graph_rag]
+#enable = true

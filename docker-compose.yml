@@ -17,9 +17,23 @@ services:
     restart: unless-stopped
     networks:
       - dbgptnet
+  neo4j:
+    image: neo4j:5
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/qq123456
+    volumes:
+      - ./neo4j-data:/data
+    networks:
+      - dbgptnet
   webserver:
     image: eosphorosai/dbgpt-openai:latest
-    command: dbgpt start webserver --config /app/configs/dbgpt-proxy-siliconflow-mysql.toml
+    command: dbgpt start webserver --config ./configs/dbgpt-proxy-siliconflow-mysql.toml
+    #command: dbgpt start webserver --config /app/configs/dbgpt-graphrag.toml
+
     environment:
       - SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
       - MYSQL_PASSWORD=aa123456
@@ -29,9 +43,9 @@ services:
       - MYSQL_USER=root
     volumes:
       - ./configs:/app/configs
-      - /data:/data
+      - ./data:/data
       # May be you can mount your models to container
-      - /data/models:/app/models
+      - ./data/models:/app/models
       - dbgpt-data:/app/pilot/data
       - dbgpt-message:/app/pilot/message
     depends_on:
