@@ -216,7 +216,22 @@ class Service(BaseService[KnowledgeSpaceEntity, SpaceServeRequest, SpaceServeRes
         """
         doc_ids = []
         for sync_request in requests:
+            # space_id = sync_request.space_id
+            # -----------------------------
+            # 1. 解析 / 回填 space_id
+            # -----------------------------
             space_id = sync_request.space_id
+            if not space_id:  # 前端没传
+                # doc.space 保存的是 space 的 name
+                spaces = self._dao.get_knowledge_space(
+                    KnowledgeSpaceEntity(name=doc.space)
+                )
+                if not spaces:
+                    raise Exception(
+                        f"Cannot infer space_id: space '{doc.space}' not found "
+                        f"(doc_id={doc.id})"
+                    )
+                space_id = spaces[0].id  # 取第一条即可
             docs = self._document_dao.documents_by_ids([sync_request.doc_id])
             if len(docs) == 0:
                 raise Exception(

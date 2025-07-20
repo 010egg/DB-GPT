@@ -30,6 +30,7 @@ type = "chroma"
 persist_path = "pilot/data"
 
 [rag.storage.graph]
+name = "KnowledgeGraph"
 type = "tugraph"
 host="127.0.0.1"
 port=7687
