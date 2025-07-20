@@ -226,6 +226,12 @@ class Service(BaseService[KnowledgeSpaceEntity, SpaceServeRequest, SpaceServeRes
                 spaces = self._dao.get_knowledge_space(
                     KnowledgeSpaceEntity(name=doc.space)
                 )
+                # 新增 ↓↓↓   --------------------------------------------------------
+                logger.debug(
+                    "Infer space_id: doc_id=%s  doc.space=%s  query_result=%s",
+                    doc.id, doc.space, spaces
+                )
+                # -----------------------------------------------------------------
                 if not spaces:
                     raise Exception(
                         f"Cannot infer space_id: space '{doc.space}' not found "

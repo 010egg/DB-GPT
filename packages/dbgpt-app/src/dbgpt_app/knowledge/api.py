@@ -474,8 +474,20 @@ async def batch_document_sync(
     logger.info(f"Received params: {space_name}, {request}")
     try:
         space = service.get({"name": space_name})
+        # ② 若 vector_type 为空，则兜底设为 KnowledgeGraph
+        # ③ 校验 / 回填每个请求的 space_id，并做文档归属 & 状态检查
+        if not space.vector_type:
+            space.vector_type = "KnowledgeGraph"
+            service.dao.update({"id": space.id}, space)
+            # 新增 ↓↓↓   --------------------------------------------------------
+            logger.debug(
+                "Infer batch_document_sync space_id: space.id=%s",
+                space.id
+            )
+            # -----------------------------------------------------------------
         for sync_request in request:
-            sync_request.space_id = space.id
+            # sync_request.space_id = space.id
+            sync_request.space_id = sync_request.space_id or space.id
         doc_ids = await service.sync_document(requests=request)
         # doc_ids = service.sync_document(
         #     space_name=space_name, sync_requests=request
