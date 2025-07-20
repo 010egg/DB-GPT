@@ -33,6 +33,7 @@ services:
     networks: [dbgptnet]
   webserver:
     image: eosphorosai/dbgpt-openai:latest
+    #image: dbgpt-diy
     command: dbgpt start webserver --config /app/configs/dbgpt-proxy-siliconflow-mysql.toml
     environment:
       - SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
@@ -43,6 +44,7 @@ services:
       - MYSQL_DATABASE=dbgpt
       - MYSQL_USER=root
     volumes:
+      - .:/app
       - ./configs:/app/configs
       - ./data:/data
       # May be you can mount your models to container

@@ -13,7 +13,9 @@ from dbgpt.storage.full_text.base import FullTextStoreBase
 from dbgpt.storage.vector_store.base import VectorStoreBase, VectorStoreConfig
 from dbgpt_ext.storage.full_text.elasticsearch import ElasticDocumentStore
 from dbgpt_ext.storage.knowledge_graph.knowledge_graph import BuiltinKnowledgeGraph
+import logging
 
+logger = logging.getLogger(__name__)
 
 class StorageManager(BaseComponent):
     """RAG STORAGE MANAGER manager."""
@@ -41,6 +43,10 @@ class StorageManager(BaseComponent):
     ) -> IndexStoreBase:
         """Get storage connector."""
         supported_vector_types = self.get_vector_supported_types
+        logger.info(
+            "Infer self.storage_config():%s",
+            self.storage_config()
+        )
         storage_config = self.storage_config()
         if storage_type.lower() in supported_vector_types:
             return self.create_vector_store(index_name)
