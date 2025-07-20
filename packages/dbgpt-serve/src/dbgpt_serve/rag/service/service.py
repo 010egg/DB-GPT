@@ -227,7 +227,7 @@ class Service(BaseService[KnowledgeSpaceEntity, SpaceServeRequest, SpaceServeRes
                     KnowledgeSpaceEntity(name=doc.space)
                 )
                 # 新增 ↓↓↓   --------------------------------------------------------
-                logger.debug(
+                logger.info(
                     "Infer space_id: doc_id=%s  doc.space=%s  query_result=%s",
                     doc.id, doc.space, spaces
                 )

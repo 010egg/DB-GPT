@@ -480,7 +480,7 @@ async def batch_document_sync(
             space.vector_type = "KnowledgeGraph"
             service.dao.update({"id": space.id}, space)
             # 新增 ↓↓↓   --------------------------------------------------------
-            logger.debug(
+            logger.info(
                 "Infer batch_document_sync space_id: space.id=%s",
                 space.id
             )
